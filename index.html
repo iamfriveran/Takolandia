@@ -1188,10 +1188,11 @@ function clearCart() {
 function openCart() {
   const list = document.getElementById('cartItemsList');
   list.innerHTML = '';
-  let total = 0;
+  // Totales
+  let itemsTotal = 0;
   Object.entries(cart).forEach(([name, item]) => {
     const sub = item.price * item.qty;
-    total += sub;
+    itemsTotal += sub;
     list.innerHTML += `
       <div class="cart-item-row">
         <div class="cart-item-name">${name}</div>
@@ -1200,7 +1201,25 @@ function openCart() {
         <button class="cart-remove" onclick="removeFromModal('${name.replace(/'/g,"\\'")}')">×</button>
       </div>`;
   });
-  document.getElementById('modalTotal').textContent = '$' + total.toFixed(2).replace('.', ',');
+
+  // Cargos adicionales siempre visibles antes del total
+  const motorizedFee = 2.50; // Motorizado
+  const loncheraFee = 0.50;  // Loncheras
+  list.innerHTML += `
+    <div class="cart-item-row" style="border-top:1px dashed rgba(255,255,255,0.06);margin-top:8px;padding-top:8px;">
+      <div class="cart-item-name">Motorizado</div>
+      <div class="cart-item-qty"></div>
+      <div class="cart-item-price">$${motorizedFee.toFixed(2).replace('.', ',')}</div>
+    </div>`;
+  list.innerHTML += `
+    <div class="cart-item-row">
+      <div class="cart-item-name">Loncheras</div>
+      <div class="cart-item-qty"></div>
+      <div class="cart-item-price">$${loncheraFee.toFixed(2).replace('.', ',')}</div>
+    </div>`;
+
+  const grandTotal = itemsTotal + motorizedFee + loncheraFee;
+  document.getElementById('modalTotal').textContent = '$' + grandTotal.toFixed(2).replace('.', ',');
   document.getElementById('cartModal').classList.add('open');
 }
 
@@ -1230,15 +1249,23 @@ function closeCartOnOverlay(e) {
 function sendToWhatsApp() {
   if (Object.keys(cart).length === 0) return;
   let msg = '🌮 *Hola Takolandia! Quiero hacer un pedido:*\n\n';
-  let total = 0;
+  let itemsTotal = 0;
   Object.entries(cart).forEach(([name, item]) => {
     const sub = item.price * item.qty;
-    total += sub;
+    itemsTotal += sub;
     msg += `• ${name} x${item.qty} = $${sub.toFixed(2)}\n`;
   });
+  // Cargos adicionales
+  const motorizedFee = 2.50;
+  const loncheraFee = 0.50;
+  msg += `\n• Motorizado = $${motorizedFee.toFixed(2)}\n`;
+  msg += `• Loncheras = $${loncheraFee.toFixed(2)}\n`;
+  const total = itemsTotal + motorizedFee + loncheraFee;
   msg += `\n💰 *Total: $${total.toFixed(2)}*`;
   const note = document.getElementById('orderNote').value.trim();
   if (note) msg += `\n\n📝 *Notas:* ${note}`;
+  // Post-data / aclaraciones al cliente
+  msg += `\n\nℹ️ *Aclaraciones:*\n* El valor del motorizado varía deacuerdo a la ubicación de la entrega\n* El valor de las loncheras varía deacuerdo al tamaño de la orden`;
   msg += '\n\nGracias! 🙏';
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
