@@ -1028,6 +1028,25 @@
       </div>
     </div>
 
+    <!-- Promo especial: tarjeta visual que sólo se muestra los JUEVES -->
+    <div id="promo-jueves-card" class="promo-card purple-card" style="display:block;">
+      <div style="display:flex;gap:12px;align-items:center;flex-direction:column;">
+        <img src="images/promo-jueves.jpg" alt="Promo Jueves - Takolandia" class="promo-image" style="width:100%;border-radius:12px;object-fit:cover;max-height:360px;">
+        <div style="width:100%;text-align:left;padding-top:6px;">
+          <div class="promo-day">PROMO JUEVES</div>
+          <div class="promo-subtitle">Quesadillas, Burritos & Tacos</div>
+          <div class="promo-items-list" style="margin-top:8px">
+            <div class="promo-line"><span class="promo-line-name">Quesadillas</span><span class="promo-line-price">2 x $5</span></div>
+            <div class="promo-line"><span class="promo-line-name">Burrito Clásico</span><span class="promo-line-price">2 x $5</span></div>
+            <div class="promo-line"><span class="promo-line-name">Burrito Gratinado</span><span class="promo-line-price">2 x $6</span></div>
+            <div class="promo-line"><span class="promo-line-name">Tacos</span><span class="promo-line-price">3 x $5</span></div>
+          </div>
+          <div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.85)">* Solo aplica res, cerdo y pollo</div>
+          <div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.85)">📞 0962737275 • 📍 Ficoa Av. Los Guaytambos & las delicia</div>
+        </div>
+      </div>
+    </div>
+
     <div class="promo-card orange-card">
       <div class="promo-day">VIERNES & SÁBADO</div>
       <div class="promo-subtitle">🍹 Happy Hour Weekend</div>
@@ -1201,6 +1220,18 @@ function sendToWhatsApp() {
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
 }
+
+// Mostrar la tarjeta de promo de jueves siempre (la visibilidad ya no depende del día)
+function showThursdayPromo() {
+  try {
+    const el = document.getElementById('promo-jueves-card');
+    if (!el) return;
+    el.style.display = 'block';
+  } catch (e) { console.error(e); }
+}
+
+// Ejecutar al cargar (mantener llamada para compatibilidad)
+document.addEventListener('DOMContentLoaded', showThursdayPromo);
 
 function switchTab(tab, btn) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
