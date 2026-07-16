@@ -555,19 +555,61 @@
   <h1>TAKOLANDIA</h1>
   <p class="tagline">Échele, échele más salsa a esos tacos 🌮 porque a comer y a beber vinimos 🍹</p>
   <div class="social-row">
-    <a href="#" class="social-btn">f</a>
-    <a href="#" class="social-btn" style="font-size:13px;font-weight:900;">TT</a>
-    <a href="#" class="social-btn">📷</a>
-    <a href="https://wa.me/593962737275" class="social-btn" style="background:#25D366;border-color:#25D366">💬</a>
+    <a href="https://www.facebook.com/share/1BTY2D4YCJ/" target="_blank" class="social-btn" title="Facebook">f</a>
+    <a href="#" onclick="showSocialInfo('tiktok'); return false;" class="social-btn" style="font-size:13px;font-weight:900;" title="TikTok">TT</a>
+    <a href="#" onclick="showSocialInfo('instagram'); return false;" class="social-btn" title="Instagram">📷</a>
+    <a href="https://wa.me/593962737275" target="_blank" class="social-btn" style="background:#25D366;border-color:#25D366" title="WhatsApp">💬</a>
   </div>
   <div class="cta-row">
-    <a href="https://wa.me/593962737275" class="cta-btn whatsapp-cta">
+    <a href="https://wa.me/593962737275" target="_blank" class="cta-btn whatsapp-cta">
       <span>💬</span> Pedidos a domicilio · 096 273 7275
     </a>
-    <a href="#" class="cta-btn"><span>📍</span> Ven a visitarnos</a>
-    <a href="#" class="cta-btn"><span>🎉</span> Celebra tu evento con nosotros</a>
+    <a href="https://maps.app.goo.gl/bGP7aH2n3qB1q2JM9" target="_blank" class="cta-btn"><span>📍</span> Ven a visitarnos</a>
+    <a href="#" onclick="openReserva(); return false;" class="cta-btn"><span>🎉</span> Celebra tu evento con nosotros</a>
   </div>
 </header>
+
+<!-- SOCIAL MODAL -->
+<div class="cart-modal-overlay" id="socialModal" onclick="closeSocialModal(event)">
+  <div class="cart-modal" style="padding-bottom:28px;">
+    <h2 id="socialModalTitle">Síguenos</h2>
+    <div id="socialModalBody" style="margin:16px 0;text-align:center;"></div>
+    <button onclick="document.getElementById('socialModal').classList.remove('open')" style="width:100%;background:rgba(255,255,255,0.1);border:none;color:white;padding:12px;border-radius:12px;font-family:'Nunito',sans-serif;font-weight:700;font-size:15px;cursor:pointer;margin-top:8px;">Cerrar</button>
+  </div>
+</div>
+
+<!-- RESERVA MODAL -->
+<div class="cart-modal-overlay" id="reservaModal" onclick="closeReservaModal(event)">
+  <div class="cart-modal" style="padding-bottom:28px;">
+    <h2>🎉 Reserva tu Evento</h2>
+    <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:16px;">Completa los datos y te contactamos para confirmar.</p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div>
+        <label style="font-size:12px;color:rgba(255,255,255,0.6);display:block;margin-bottom:4px;">📅 Fecha del evento</label>
+        <input type="date" id="reservaFecha" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:white;padding:10px;font-family:'Nunito',sans-serif;font-size:14px;">
+      </div>
+      <div>
+        <label style="font-size:12px;color:rgba(255,255,255,0.6);display:block;margin-bottom:4px;">🕐 Hora de llegada</label>
+        <input type="time" id="reservaHora" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:white;padding:10px;font-family:'Nunito',sans-serif;font-size:14px;">
+      </div>
+      <div>
+        <label style="font-size:12px;color:rgba(255,255,255,0.6);display:block;margin-bottom:4px;">👤 Nombre completo</label>
+        <input type="text" id="reservaNombre" placeholder="Ej: María García" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:white;padding:10px;font-family:'Nunito',sans-serif;font-size:14px;">
+      </div>
+      <div>
+        <label style="font-size:12px;color:rgba(255,255,255,0.6);display:block;margin-bottom:4px;">📱 Número de celular</label>
+        <input type="tel" id="reservaCelular" placeholder="Ej: 0991234567" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:white;padding:10px;font-family:'Nunito',sans-serif;font-size:14px;">
+      </div>
+      <div>
+        <label style="font-size:12px;color:rgba(255,255,255,0.6);display:block;margin-bottom:4px;">👥 Número de personas</label>
+        <input type="number" id="reservaPersonas" placeholder="Ej: 10" min="1" style="width:100%;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:10px;color:white;padding:10px;font-family:'Nunito',sans-serif;font-size:14px;">
+      </div>
+    </div>
+    <div id="reservaError" style="color:#ff6b6b;font-size:12px;margin-top:10px;display:none;">⚠️ Por favor completa todos los campos.</div>
+    <button onclick="enviarReserva()" style="width:100%;margin-top:16px;background:#25D366;border:none;color:white;padding:15px;border-radius:14px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;">💬 ENVIAR RESERVA POR WHATSAPP</button>
+    <button onclick="document.getElementById('reservaModal').classList.remove('open')" style="width:100%;background:rgba(255,255,255,0.08);border:none;color:white;padding:12px;border-radius:12px;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;cursor:pointer;margin-top:8px;">Cancelar</button>
+  </div>
+</div>
 
 <!-- TABS -->
 <div class="tabs-wrapper">
@@ -887,8 +929,8 @@
     <div class="items-grid">
       <div class="menu-item bev-red" onclick="addItem('Agua de Jamaica', 1.25)"><div class="item-name">Agua de Jamaica</div><div class="item-footer"><div class="item-price">$1,25</div><div class="add-btn-single add-btn">+</div><div class="qty-ctrl"><button class="qty-btn" onclick="event.stopPropagation();changeQty('Agua de Jamaica',1.25,-1)">−</button><span class="qty-num" id="qty-Agua de Jamaica">1</span><button class="qty-btn" onclick="event.stopPropagation();changeQty('Agua de Jamaica',1.25,1)">+</button></div></div></div>
       <div class="menu-item bev-red" onclick="addItem('Horchata', 1.25)"><div class="item-name">Horchata</div><div class="item-footer"><div class="item-price">$1,25</div><div class="add-btn-single add-btn">+</div><div class="qty-ctrl"><button class="qty-btn" onclick="event.stopPropagation();changeQty('Horchata',1.25,-1)">−</button><span class="qty-num" id="qty-Horchata">1</span><button class="qty-btn" onclick="event.stopPropagation();changeQty('Horchata',1.25,1)">+</button></div></div></div>
-      <div class="menu-item" onclick="addItem('Agua Natural', 1.75)"><div class="item-name">Agua Natural</div><div class="item-footer"><div class="item-price">$1,75</div><div class="add-btn-single add-btn">+</div><div class="qty-ctrl"><button class="qty-btn" onclick="event.stopPropagation();changeQty('Agua Natural',1.75,-1)">−</button><span class="qty-num" id="qty-Agua Natural">1</span><button class="qty-btn" onclick="event.stopPropagation();changeQty('Agua Natural',1.75,1)">+</button></div></div></div>
-      <div class="menu-item" onclick="addItem('Agua con Gas', 1.75)"><div class="item-name">Agua con Gas</div><div class="item-footer"><div class="item-price">$1,75</div><div class="add-btn-single add-btn">+</div><div class="qty-ctrl"><button class="qty-btn" onclick="event.stopPropagation();changeQty('Agua con Gas',1.75,-1)">−</button><span class="qty-num" id="qty-Agua con Gas">1</span><button class="qty-btn" onclick="event.stopPropagation();changeQty('Agua con Gas',1.75,1)">+</button></div></div></div>
+      <div class="menu-item" onclick="addItem('Agua Natural', 1.00)"><div class="item-name">Agua Natural</div><div class="item-footer"><div class="item-price">$1,00</div><div class="add-btn-single add-btn">+</div><div class="qty-ctrl"><button class="qty-btn" onclick="event.stopPropagation();changeQty('Agua Natural',1.00,-1)">−</button><span class="qty-num" id="qty-Agua Natural">1</span><button class="qty-btn" onclick="event.stopPropagation();changeQty('Agua Natural',1.00,1)">+</button></div></div></div>
+      <div class="menu-item" onclick="addItem('Agua con Gas', 1.00)"><div class="item-name">Agua con Gas</div><div class="item-footer"><div class="item-price">$1,00</div><div class="add-btn-single add-btn">+</div><div class="qty-ctrl"><button class="qty-btn" onclick="event.stopPropagation();changeQty('Agua con Gas',1.00,-1)">−</button><span class="qty-num" id="qty-Agua con Gas">1</span><button class="qty-btn" onclick="event.stopPropagation();changeQty('Agua con Gas',1.00,1)">+</button></div></div></div>
       <div class="menu-item" onclick="addItem('Fuze Tea', 1.75)"><div class="item-name">Fuze Tea</div><div class="item-footer"><div class="item-price">$1,75</div><div class="add-btn-single add-btn">+</div><div class="qty-ctrl"><button class="qty-btn" onclick="event.stopPropagation();changeQty('Fuze Tea',1.75,-1)">−</button><span class="qty-num" id="qty-Fuze Tea">1</span><button class="qty-btn" onclick="event.stopPropagation();changeQty('Fuze Tea',1.75,1)">+</button></div></div></div>
       <div class="menu-item bev-red" onclick="addItem('Soda', 1.25)"><div class="item-name">Soda</div><div class="item-footer"><div class="item-price">$1,25</div><div class="add-btn-single add-btn">+</div><div class="qty-ctrl"><button class="qty-btn" onclick="event.stopPropagation();changeQty('Soda',1.25,-1)">−</button><span class="qty-num" id="qty-Soda">1</span><button class="qty-btn" onclick="event.stopPropagation();changeQty('Soda',1.25,1)">+</button></div></div></div>
       <div class="menu-item" onclick="addItem('Soda de 1 Litro', 2.50)"><div class="item-name">Soda 1 Litro</div><div class="item-footer"><div class="item-price">$2,50</div><div class="add-btn-single add-btn">+</div><div class="qty-ctrl"><button class="qty-btn" onclick="event.stopPropagation();changeQty('Soda de 1 Litro',2.50,-1)">−</button><span class="qty-num" id="qty-Soda de 1 Litro">1</span><button class="qty-btn" onclick="event.stopPropagation();changeQty('Soda de 1 Litro',2.50,1)">+</button></div></div></div>
@@ -1200,6 +1242,84 @@ function sendToWhatsApp() {
   msg += '\n\nGracias! 🙏';
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
+}
+
+function showSocialInfo(platform) {
+  const modal = document.getElementById('socialModal');
+  const title = document.getElementById('socialModalTitle');
+  const body = document.getElementById('socialModalBody');
+  if (platform === 'tiktok') {
+    title.textContent = '🎵 TikTok';
+    body.innerHTML = `
+      <div style="font-size:32px;margin-bottom:12px;">🎵</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:#f5c518;letter-spacing:2px;margin-bottom:8px;">@takolandia.ec</div>
+      <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:16px;">Busca nuestro perfil en TikTok</p>
+      <button onclick="copyToClipboard('@takolandia.ec', this)" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;padding:10px 24px;border-radius:50px;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">📋 Copiar @takolandia.ec</button>`;
+  } else if (platform === 'instagram') {
+    title.textContent = '📷 Instagram';
+    body.innerHTML = `
+      <div style="font-size:32px;margin-bottom:12px;">📷</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:#f5c518;letter-spacing:2px;margin-bottom:8px;">@takolandia.ecu</div>
+      <p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:16px;">Busca nuestro perfil en Instagram</p>
+      <button onclick="copyToClipboard('@takolandia.ecu', this)" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;padding:10px 24px;border-radius:50px;font-family:'Nunito',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">📋 Copiar @takolandia.ecu</button>`;
+  }
+  modal.classList.add('open');
+}
+
+function copyToClipboard(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✅ Copiado!';
+    btn.style.background = '#25D366';
+    setTimeout(() => {
+      btn.textContent = '📋 Copiar ' + text;
+      btn.style.background = 'rgba(255,255,255,0.1)';
+    }, 2000);
+  });
+}
+
+function closeSocialModal(e) {
+  if (e.target === document.getElementById('socialModal')) {
+    document.getElementById('socialModal').classList.remove('open');
+  }
+}
+
+function openReserva() {
+  document.getElementById('reservaModal').classList.add('open');
+}
+
+function closeReservaModal(e) {
+  if (e.target === document.getElementById('reservaModal')) {
+    document.getElementById('reservaModal').classList.remove('open');
+  }
+}
+
+function enviarReserva() {
+  const fecha = document.getElementById('reservaFecha').value;
+  const hora = document.getElementById('reservaHora').value;
+  const nombre = document.getElementById('reservaNombre').value.trim();
+  const celular = document.getElementById('reservaCelular').value.trim();
+  const personas = document.getElementById('reservaPersonas').value.trim();
+  const errorEl = document.getElementById('reservaError');
+
+  if (!fecha || !hora || !nombre || !celular || !personas) {
+    errorEl.style.display = 'block';
+    return;
+  }
+  errorEl.style.display = 'none';
+
+  // Format date nicely
+  const fechaObj = new Date(fecha + 'T00:00:00');
+  const diasSemana = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const fechaFormateada = `${diasSemana[fechaObj.getDay()]} ${fechaObj.getDate()} de ${meses[fechaObj.getMonth()]} de ${fechaObj.getFullYear()}`;
+
+  // Format time
+  const [h, m] = hora.split(':');
+  const horaFormateada = `${h}:${m} ${parseInt(h) < 12 ? 'AM' : 'PM'}`;
+
+  const msg = `🎉 *RESERVA DE EVENTO - TAKOLANDIA*\n\n👤 *Nombre:* ${nombre}\n📱 *Celular:* ${celular}\n📅 *Fecha:* ${fechaFormateada}\n🕐 *Hora de llegada:* ${horaFormateada}\n👥 *Número de personas:* ${personas}\n\n¡Hola! Me gustaría hacer una reserva para mi evento. Por favor confirmar disponibilidad. 🌮`;
+
+  window.open(`https://wa.me/593962737275?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 function switchTab(tab, btn) {
