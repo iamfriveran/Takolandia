@@ -439,8 +439,9 @@
     z-index: 300;
     display: none;
     align-items: flex-end;
+    justify-content: center;
   }
-  .cart-modal-overlay.open { display: flex; }
+  .cart-modal-overlay.open { display: flex !important; }
   .cart-modal {
     background: #1e0a3c;
     border-radius: 20px 20px 0 0;
@@ -556,8 +557,8 @@
   <p class="tagline">Échele, échele más salsa a esos tacos 🌮 porque a comer y a beber vinimos 🍹</p>
   <div class="social-row">
     <a href="https://www.facebook.com/share/1BTY2D4YCJ/" target="_blank" class="social-btn" title="Facebook">f</a>
-    <a href="#" onclick="showSocialInfo('tiktok'); return false;" class="social-btn" style="font-size:13px;font-weight:900;" title="TikTok">TT</a>
-    <a href="#" onclick="showSocialInfo('instagram'); return false;" class="social-btn" title="Instagram">📷</a>
+    <a href="#" onclick="abrirTiktok(); return false;" class="social-btn" style="font-size:13px;font-weight:900;" title="TikTok">TT</a>
+    <a href="#" onclick="abrirInstagram(); return false;" class="social-btn" title="Instagram">📷</a>
     <a href="https://wa.me/593962737275" target="_blank" class="social-btn" style="background:#25D366;border-color:#25D366" title="WhatsApp">💬</a>
   </div>
   <div class="cta-row">
@@ -565,7 +566,7 @@
       <span>💬</span> Pedidos a domicilio · 096 273 7275
     </a>
     <a href="https://maps.app.goo.gl/bGP7aH2n3qB1q2JM9" target="_blank" class="cta-btn"><span>📍</span> Ven a visitarnos</a>
-    <a href="#" onclick="openReserva(); return false;" class="cta-btn"><span>🎉</span> Celebra tu evento con nosotros</a>
+    <a href="#" onclick="event.preventDefault(); document.getElementById('reservaModal').classList.add('open');" class="cta-btn"><span>🎉</span> Celebra tu evento con nosotros</a>
   </div>
 </header>
 
@@ -1242,6 +1243,28 @@ function sendToWhatsApp() {
   msg += '\n\nGracias! 🙏';
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
   window.open(url, '_blank');
+}
+
+function abrirTiktok() {
+  document.getElementById('socialModalTitle').textContent = '🎵 TikTok';
+  document.getElementById('socialModalBody').innerHTML =
+    '<div style="font-size:40px;margin-bottom:12px">🎵</div>' +
+    '<div style="font-size:26px;font-weight:900;color:#f5c518;margin-bottom:8px">@takolandia.ec</div>' +
+    '<p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:16px">Búscanos en TikTok</p>' +
+    '<button id="btnCopyTT" onclick="navigator.clipboard.writeText(\'@takolandia.ec\').then(function(){document.getElementById(\'btnCopyTT\').textContent=\'✅ Copiado!\'})" ' +
+    'style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:white;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer">📋 Copiar @takolandia.ec</button>';
+  document.getElementById('socialModal').classList.add('open');
+}
+
+function abrirInstagram() {
+  document.getElementById('socialModalTitle').textContent = '📷 Instagram';
+  document.getElementById('socialModalBody').innerHTML =
+    '<div style="font-size:40px;margin-bottom:12px">📷</div>' +
+    '<div style="font-size:26px;font-weight:900;color:#f5c518;margin-bottom:8px">@takolandia.ecu</div>' +
+    '<p style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:16px">Búscanos en Instagram</p>' +
+    '<button id="btnCopyIG" onclick="navigator.clipboard.writeText(\'@takolandia.ecu\').then(function(){document.getElementById(\'btnCopyIG\').textContent=\'✅ Copiado!\'})" ' +
+    'style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:white;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:700;cursor:pointer">📋 Copiar @takolandia.ecu</button>';
+  document.getElementById('socialModal').classList.add('open');
 }
 
 function showSocialInfo(platform) {
